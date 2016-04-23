@@ -7,29 +7,36 @@ import RPi.GPIO as GPIO
  
 # Crear instancia de bus SPI
 spi = spidev.SpiDev()
-#Intentar abrir bus SPI
+
+#Intentar abrir bus SPI si no se puede abrir se termina la ejecución con un código -1
 try:
 	spi.open(0,0)
 except:
 	print "Error al abrir SPI"
-	exit()
+	exit(-1)
+
 #Funcion para lectura de un canal SPI
 def ReadChannel(channel):
   adc = spi.xfer2([1,(8+channel)<<4,0])
   data = ((adc[1]&3) << 8) + adc[2]
   return data
+
 #Utilizar el GPIO en modo bcm
 GPIO.setmode(GPIO.BCM)
+
 #Definir los pines a utilizar
 pines=[2,3,4,17,27,22]
+
 #Configurar los pines como salidas
 for p in pines:
   GPIO.setup(p, GPIO.OUT)
+
 #Loop principal
 while True:
-#Leer dato del ADC
+
+	#Leer dato del ADC
   level = ReadChannel(0)
-#Encender los LED's dependiendo del dato
+	#Encender los LED's dependiendo del dato
   if level > 5:
     GPIO.output(pines[0], True)
   if level > 170:
@@ -42,10 +49,10 @@ while True:
     GPIO.output(pines[4], True)
   if level > 850:
     GPIO.output(pines[5], True)
-#Delay
+	#Delay
   time.sleep(0.1)
   for p in pines:
-#Apagar los LED's
+	#Apagar los LED's
     GPIO.output(p, False)
 
 
