@@ -25,32 +25,24 @@ message = "It's too close!!"
 # Crear instancia de bus SPI
 spi = spidev.SpiDev()
 
-#Intentar abrir bus SPI si no se puede abrir se termina la ejecución con un código -1
+#Intentar abrir bus SPI
 try:
   spi.open(0,0)
 except:
-<<<<<<< HEAD
   print "Error al abrir SPI"
   exit()
 #Manejador de signal
 def signal_handler(signum, frame):
     send = True
-=======
-	print "Error al abrir SPI"
-	exit(-1)
 
->>>>>>> 15ae0491f23e0d1de225bd69e721a06057890d87
 #Funcion para lectura de un canal SPI
 def ReadChannel(channel):
   adc = spi.xfer2([1,(8+channel)<<4,0])
   data = ((adc[1]&3) << 8) + adc[2]
   return data
-<<<<<<< HEAD
 #Asignar manejador
 signal.signal(signal.SIGALRM, signal_handler)
-=======
 
->>>>>>> 15ae0491f23e0d1de225bd69e721a06057890d87
 #Utilizar el GPIO en modo bcm
 GPIO.setmode(GPIO.BCM)
 
@@ -64,9 +56,9 @@ for p in pines:
 #Loop principal
 while True:
 
-	#Leer dato del ADC
+#Leer dato del ADC
   level = ReadChannel(0)
-	#Encender los LED's dependiendo del dato
+#Encender los LEDs dependiendo del dato
   if level > 5:
     GPIO.output(pines[0], True)
   if level > 170:
@@ -80,7 +72,6 @@ while True:
 #Enviar tweet si level > 850
   if level > 850:
     GPIO.output(pines[5], True)
-<<<<<<< HEAD
     if send:
       try:
         twitter.update_status(status=message)  
@@ -91,16 +82,9 @@ while True:
         print ("Imposible enviar tweet")
 
 #Delay
-=======
-	#Delay
->>>>>>> 15ae0491f23e0d1de225bd69e721a06057890d87
   time.sleep(0.1)
 #Apagar los LEDs
   for p in pines:
-<<<<<<< HEAD
-=======
-	#Apagar los LED's
->>>>>>> 15ae0491f23e0d1de225bd69e721a06057890d87
     GPIO.output(p, False)
 
 
