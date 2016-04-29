@@ -21,7 +21,7 @@ twitter = Twython(
 )
 
 send = True
-message = "It's too close!!" 
+message = "It's too close!! " 
 # Crear instancia de bus SPI
 spi = spidev.SpiDev()
 
@@ -75,12 +75,12 @@ while True:
     GPIO.output(pines[5], True)
     if send:
       try:
-        twitter.update_status(status=message)  
+        twitter.update_status(status=message+time.strftime("%c"))  
         send = False
 #Esperar 10 segundos para enviar otro tweet
         signal.alarm(10)
-      except:
-        print ("Imposible enviar tweet")
+      except Exception, e:
+        print "Imposible enviar tweet: ", str(e)
 
 #Delay
   time.sleep(0.1)
