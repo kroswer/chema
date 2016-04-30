@@ -26,11 +26,11 @@ La finalidad de nuestro proyecto es tener un sistema funcionando continuamente, 
 
 El script fue escrito utilizando como lenguaje a Python. Es importante recalcar que se utilizo la libreria 		*RPi.GPIO* para poder utilizar los puertos dentro del script. 
 
-Para poder mantener el código como un ***demonio***, se siguieron los siguientes pasos. 
+Para su funcionamiento es posible descargar los archivos del repositorios y moverlos a /usr/bin/ y el archivo .service a /etc/systemd/system/. O bien, utilizar el paquete .deb proporcionado. 
 
-- 1
-- 2
-- 3
+Para poder mantener el código como un ***demonio***, solo se debe escribir el comando:
+
+>systemctl enable bichori.service
 
 Utiliza a su vez la API de Twitter para Python, para poder enviar información al exterior y poder ser visualizada desde cualquier parte, por multiples usuarios. 
 
